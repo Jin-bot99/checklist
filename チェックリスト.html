@@ -67,17 +67,10 @@
                 <p class="mt-2 text-sm md:text-base">―「がんばり屋さんの無意識スイッチ」に気づくために ―</p>
             </header>
 
-            <!-- 印刷ボタン -->
-            <div class="text-center my-6 print-hidden">
-                <button onclick="window.print()" class="bg-accent hover:bg-opacity-80 text-white font-bold py-2 px-6 rounded-full shadow-lg transition-transform transform hover:scale-105">
-                    PDFで保存 / 印刷する
-                </button>
-            </div>
-
             <main>
                 <!-- 導入文 -->
                 <div class="bg-white/70 p-6 rounded-xl shadow-md border border-gray-200 mb-8">
-                    <p class="leading-relaxed">いつも家族のために、お仕事に、と頑張っているあなたへ。</p>
+                    <p class="leading-relaxed">いつも家族のために、お仕事に、と頑ばっているあなたへ。</p>
                     <p class="mt-2 leading-relaxed">気づかないうちに、自分のことを後回しにしていませんか？ このチェックリストは、あなたが自分の心の声に耳を傾け、今の状態に気づくための小さなきっかけです。</p>
                     <p class="mt-4 font-bold text-accent">あてはまる方にチェックを入れて、合計点を出してみましょう。</p>
                 </div>
@@ -90,7 +83,7 @@
 
                     <!-- 点数計算欄 -->
                     <div class="mt-8 text-center bg-main p-4 rounded-lg">
-                        <p class="font-bold">「はい」は2点、「いいえ」は0点で計算されます。</p>
+                        <p class="font-bold">「はい」は1点、「いいえ」は0点で計算されます。</p>
                         <div class="mt-2 text-lg font-bold text-accent">
                             あなたの合計点： <span id="total-score" class="inline-block border-b-2 border-accent w-16 text-center">0</span> 点
                         </div>
@@ -110,7 +103,7 @@
                 <!-- タイプA: フルパワー頑張りすぎさん -->
                 <div id="result-a" class="result-card bg-white p-6 sm:p-8 rounded-xl shadow-xl border-t-4 border-red-300">
                     <h3 class="text-xl font-bold text-center mb-4 font-mincho text-red-400">
-                        🌪【15〜20点】：フルパワー頑張りすぎさん
+                        🌪【8〜10点】：フルパワー頑張りすぎさん
                     </h3>
                     <p class="text-center font-bold mb-6">気づけばずっと「全力モード」になっていませんか？</p>
                     <p class="leading-relaxed text-sm sm:text-base">がんばり屋さんほど、自分の疲れや心のサインに気づきにくいもの。「まだ大丈夫」と思っていても、心と体は休息を求めているかもしれません。あなたが休むことは、決して怠けているわけではなく、あなた自身と大切な家族への素敵な「ギフト」です。まずは5分、何もしない時間を作るところから始めてみませんか？</p>
@@ -123,7 +116,7 @@
                 <!-- タイプB: ちょっとお疲れモード -->
                 <div id="result-b" class="result-card bg-white p-6 sm:p-8 rounded-xl shadow-xl border-t-4 border-yellow-300">
                     <h3 class="text-xl font-bold text-center mb-4 font-mincho text-yellow-500">
-                        🌤【8〜14点】：がんばり屋さん、ちょっとお疲れモード
+                        🌤【4〜7点】：がんばり屋さん、ちょっとお疲れモード
                     </h3>
                     <p class="text-center font-bold mb-6">がんばる力も、人を想う気持ちも、あなたの素敵な才能です。</p>
                     <p class="leading-relaxed text-sm sm:text-base">でも、最近なんだか自分のことが後回しになっていると感じませんか？「誰かのために」と頑張るのと同じくらい、「自分のために」時間を使うことも大切です。ほんの少し立ち止まって、「私、今どうしたい？」と自分の心の声に耳を澄ませてみてください。</p>
@@ -136,7 +129,7 @@
                 <!-- タイプC: ちょうどいいがんばりバランスさん -->
                 <div id="result-c" class="result-card bg-white p-6 sm:p-8 rounded-xl shadow-xl border-t-4 border-green-300">
                     <h3 class="text-xl font-bold text-center mb-4 font-mincho text-green-500">
-                        ☀️【0〜7点】：ちょうどいいがんばりバランスさん
+                        ☀️【0〜3点】：ちょうどいいがんばりバランスさん
                     </h3>
                     <p class="text-center font-bold mb-6">自分を大切にする感覚が、ちゃんと育っている証拠です。</p>
                     <p class="leading-relaxed text-sm sm:text-base">今のあなたは、自分のペースを大切にしながら、周りへの思いやりも忘れない、素敵なバランスを保てているようです。その感覚をぜひ大切にしてくださいね。とはいえ、環境の変化などでバランスは揺らぐもの。「最近、無理してないかな？」と、時々自分に問いかけてあげることを忘れずに。</p>
@@ -198,11 +191,12 @@
             // 点数計算と結果表示の関数
             function calculateScore() {
                 let total = 0;
-                const checkedYes = container.querySelectorAll('input[value="2"]:checked');
-                checkedYes.forEach(radio => {
-                    total += parseInt(radio.value, 10);
+                const radios = container.querySelectorAll('input[type="radio"]');
+                radios.forEach(radio => {
+                    if (radio.checked && radio.value === 'yes') {
+                        total += 1; // 「はい」は1点
+                    }
                 });
-                
                 scoreEl.textContent = total;
 
                 // すべてのハイライトをリセット
@@ -211,9 +205,9 @@
                 resultC.classList.remove('result-highlight');
 
                 // 点数に応じてハイライト
-                if (total >= 15) {
+                if (total >= 8) {
                     resultA.classList.add('result-highlight');
-                } else if (total >= 8) {
+                } else if (total >= 4) {
                     resultB.classList.add('result-highlight');
                 } else {
                     resultC.classList.add('result-highlight');
