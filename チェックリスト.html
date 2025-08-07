@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>私、がんばりすぎてない？チェックリスト</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&family=Shippori+Mincho&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'M PLUS Rounded 1c', sans-serif;
+            background-color: #FDF6F0; /* 全体の背景色を優しいピンクベージュに */
+        }
+        .font-mincho {
+            font-family: 'Shippori Mincho', serif;
+        }
+        /* カスタムカラー */
+        .bg-main { background-color: #F5E1D3; }
+        .bg-accent { background-color: #E8C3B9; }
+        .text-main { color: #6D4C41; }
+        .text-accent { color: #A47551; }
+        .border-accent { border-color: #E8C3B9; }
+
+        /* 結果ハイライト用のスタイル */
+        .result-highlight {
+            border-color: #67E8F9; /* 目立つように水色に */
+            box-shadow: 0 10px 15px -3px rgba(103, 232, 249, 0.3), 0 4px 6px -2px rgba(103, 232, 249, 0.2);
+            transform: scale(1.02);
+        }
+        .result-card {
+            transition: all 0.3s ease-in-out; /* アニメーションを滑らかに */
+        }
+
+        /* 印刷用の設定 */
+        @media print {
+            body, .printable-area {
+                background-color: #FFFFFF !important; /* 印刷時は背景を白に */
+                -webkit-print-color-adjust: exact; /* 背景色を強制的に印刷 */
+                print-color-adjust: exact;
+            }
+            .printable-area {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+                margin: 0;
+                width: 100%;
+                max-width: 100%;
+            }
+            .page-break {
+                page-break-before: always; /* 2ページ目を強制的に改ページ */
+            }
+            .print-hidden { display: none; } /* 印刷時に非表示にするクラス */
+        }
+    </style>
+</head>
+<body class="text-main">
+
+    <div class="printable-area container mx-auto max-w-4xl p-4 sm:p-8">
+        
+        <!-- 1ページ目：タイトルとチェックリスト -->
+        <div>
+            <!-- タイトルセクション -->
+            <header class="text-center mb-8">
+                <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-accent font-mincho">私、がんばりすぎてない？<br class="sm:hidden">チェックリスト</h1>
+                <p class="mt-2 text-sm md:text-base">―「がんばり屋さんの無意識スイッチ」に気づくために ―</p>
+            </header>
+
+            <!-- 印刷ボタン -->
+            <div class="text-center my-6 print-hidden">
+                <button onclick="window.print()" class="bg-accent hover:bg-opacity-80 text-white font-bold py-2 px-6 rounded-full shadow-lg transition-transform transform hover:scale-105">
+                    PDFで保存 / 印刷する
+                </button>
+            </div>
+
+            <main>
+                <!-- 導入文 -->
+                <div class="bg-white/70 p-6 rounded-xl shadow-md border border-gray-200 mb-8">
+                    <p class="leading-relaxed">いつも家族のために、お仕事に、と頑張っているあなたへ。</p>
+                    <p class="mt-2 leading-relaxed">気づかないうちに、自分のことを後回しにしていませんか？ このチェックリストは、あなたが自分の心の声に耳を傾け、今の状態に気づくための小さなきっかけです。</p>
+                    <p class="mt-4 font-bold text-accent">あてはまる方にチェックを入れて、合計点を出してみましょう。</p>
+                </div>
+
+                <!-- チェックリスト -->
+                <div class="bg-white p-6 sm:p-8 rounded-xl shadow-lg">
+                    <div id="checklist-container" class="space-y-5">
+                        <!-- JavaScriptで質問をここに生成します -->
+                    </div>
+
+                    <!-- 点数計算欄 -->
+                    <div class="mt-8 text-center bg-main p-4 rounded-lg">
+                        <p class="font-bold">「はい」は2点、「いいえ」は0点で計算されます。</p>
+                        <div class="mt-2 text-lg font-bold text-accent">
+                            あなたの合計点： <span id="total-score" class="inline-block border-b-2 border-accent w-16 text-center">0</span> 点
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- 2ページ目：診断結果 -->
+        <div class="page-break mt-12">
+            <header class="text-center mb-8">
+                <h2 class="text-2xl sm:text-3xl font-bold text-accent font-mincho">診断結果を見てみよう</h2>
+                <p class="mt-2 text-sm">あなたの合計点と照らし合わせて、自分に合ったメッセージを受け取ってくださいね。</p>
+            </header>
+
+            <div class="space-y-8">
+                <!-- タイプA: フルパワー頑張りすぎさん -->
+                <div id="result-a" class="result-card bg-white p-6 sm:p-8 rounded-xl shadow-xl border-t-4 border-red-300">
+                    <h3 class="text-xl font-bold text-center mb-4 font-mincho text-red-400">
+                        🌪【15〜20点】：フルパワー頑張りすぎさん
+                    </h3>
+                    <p class="text-center font-bold mb-6">気づけばずっと「全力モード」になっていませんか？</p>
+                    <p class="leading-relaxed text-sm sm:text-base">がんばり屋さんほど、自分の疲れや心のサインに気づきにくいもの。「まだ大丈夫」と思っていても、心と体は休息を求めているかもしれません。あなたが休むことは、決して怠けているわけではなく、あなた自身と大切な家族への素敵な「ギフト」です。まずは5分、何もしない時間を作るところから始めてみませんか？</p>
+                    <div class="mt-6 bg-red-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-red-500">🌿 ワンポイントアドバイス</h4>
+                        <p class="mt-2 text-base leading-relaxed">「〜しなきゃ」を「〜してもいい」に言い換えてみましょう。「掃除しなきゃ」→「疲れたから今日は休んでもいい」。小さな許可が、心をふっと軽くしてくれます。</p>
+                    </div>
+                </div>
+
+                <!-- タイプB: ちょっとお疲れモード -->
+                <div id="result-b" class="result-card bg-white p-6 sm:p-8 rounded-xl shadow-xl border-t-4 border-yellow-300">
+                    <h3 class="text-xl font-bold text-center mb-4 font-mincho text-yellow-500">
+                        🌤【8〜14点】：がんばり屋さん、ちょっとお疲れモード
+                    </h3>
+                    <p class="text-center font-bold mb-6">がんばる力も、人を想う気持ちも、あなたの素敵な才能です。</p>
+                    <p class="leading-relaxed text-sm sm:text-base">でも、最近なんだか自分のことが後回しになっていると感じませんか？「誰かのために」と頑張るのと同じくらい、「自分のために」時間を使うことも大切です。ほんの少し立ち止まって、「私、今どうしたい？」と自分の心の声に耳を澄ませてみてください。</p>
+                    <div class="mt-6 bg-yellow-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-yellow-600">🕊 ワンポイントアドバイス</h4>
+                        <p class="mt-2 text-base leading-relaxed">一日の終わりに「今日できたこと」を3つだけ書き出してみましょう。「子どもの話を聞けた」「ご飯を作った」など、どんな小さなことでもOK。自分を認めてあげる習慣が、自信につながります。</p>
+                    </div>
+                </div>
+
+                <!-- タイプC: ちょうどいいがんばりバランスさん -->
+                <div id="result-c" class="result-card bg-white p-6 sm:p-8 rounded-xl shadow-xl border-t-4 border-green-300">
+                    <h3 class="text-xl font-bold text-center mb-4 font-mincho text-green-500">
+                        ☀️【0〜7点】：ちょうどいいがんばりバランスさん
+                    </h3>
+                    <p class="text-center font-bold mb-6">自分を大切にする感覚が、ちゃんと育っている証拠です。</p>
+                    <p class="leading-relaxed text-sm sm:text-base">今のあなたは、自分のペースを大切にしながら、周りへの思いやりも忘れない、素敵なバランスを保てているようです。その感覚をぜひ大切にしてくださいね。とはいえ、環境の変化などでバランスは揺らぐもの。「最近、無理してないかな？」と、時々自分に問いかけてあげることを忘れずに。</p>
+                    <div class="mt-6 bg-green-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-green-600">🌸 ワンポイントアドバイス</h4>
+                        <p class="mt-2 text-base leading-relaxed">「がんばらない」ことを意識してスケジュールに組み込んでみましょう。例えば「何もしないで好きな飲み物を飲む時間」など。何もしないこと、休むことにも価値がある、と自分に教えてあげましょう。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="text-center mt-12 text-xs text-gray-400">
+            <p>&copy; 2025 さくら All Rights Reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const questions = [
+                { no: 1, text: "子どもが寝ている間も「今のうちに」と家事や仕事を詰めこみがち" },
+                { no: 2, text: "「もっとちゃんとしなきゃ」が口ぐせになっている" },
+                { no: 3, text: "人に頼るより、自分でやった方が早いと思ってしまう" },
+                { no: 4, text: "家族のことは優先するのに、自分のことは後回し" },
+                { no: 5, text: "つい「私が我慢すればいい」と思ってしまう" },
+                { no: 6, text: "「休んでる時間」が無駄に感じることがある" },
+                { no: 7, text: "「がんばってるね」と言われると泣きそうになる" },
+                { no: 8, text: "やることが多すぎて、息をつく間もない" },
+                { no: 9, text: "SNSや他のママを見て落ち込むことがある" },
+                { no: 10, text: "どれだけがんばっても「まだ足りない」と感じる" },
+            ];
+
+            const container = document.getElementById('checklist-container');
+            const scoreEl = document.getElementById('total-score');
+            const resultA = document.getElementById('result-a');
+            const resultB = document.getElementById('result-b');
+            const resultC = document.getElementById('result-c');
+
+            // 質問項目を生成
+            questions.forEach(q => {
+                const item = document.createElement('div');
+                item.className = 'question-item flex items-center justify-between border-b border-accent/30 pb-3';
+                item.innerHTML = `
+                    <p class="text-sm sm:text-base">
+                        <span class="font-bold text-accent mr-2">${q.no}.</span>
+                        ${q.text}
+                    </p>
+                    <div class="flex space-x-4 text-sm whitespace-nowrap ml-4">
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" name="q${q.no}" value="2" class="mr-1 accent-pink-400"> はい
+                        </label>
+                        <label class="flex items-center cursor-pointer">
+                            <input type="radio" name="q${q.no}" value="0" class="mr-1 accent-gray-400" checked> いいえ
+                        </label>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+
+            // 点数計算と結果表示の関数
+            function calculateScore() {
+                let total = 0;
+                const checkedYes = container.querySelectorAll('input[value="2"]:checked');
+                checkedYes.forEach(radio => {
+                    total += parseInt(radio.value, 10);
+                });
+                
+                scoreEl.textContent = total;
+
+                // すべてのハイライトをリセット
+                resultA.classList.remove('result-highlight');
+                resultB.classList.remove('result-highlight');
+                resultC.classList.remove('result-highlight');
+
+                // 点数に応じてハイライト
+                if (total >= 15) {
+                    resultA.classList.add('result-highlight');
+                } else if (total >= 8) {
+                    resultB.classList.add('result-highlight');
+                } else {
+                    resultC.classList.add('result-highlight');
+                }
+            }
+
+            // ラジオボタンの変更を監視
+            container.addEventListener('change', calculateScore);
+
+            // 初期状態の計算（0点なのでCがハイライトされる）
+            calculateScore();
+        });
+    </script>
+
+</body>
+</html>
